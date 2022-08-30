@@ -15,6 +15,7 @@ class ViewStudents extends StatefulWidget {
 class _ViewStudentsState extends State<ViewStudents> {
   final _searchController = TextEditingController();
   Box<Student>? studentBox;
+
   @override
   void initState() {
     studentBox = Hive.box<Student>('Student');
@@ -27,9 +28,11 @@ class _ViewStudentsState extends State<ViewStudents> {
     super.dispose();
   }
 
-  final studentBoxList = Hive.box<Student>('Student').values.toList();
-  late List displayStudent = List<Student>.from(studentBoxList);
-  searchStudentList(String value) {
+  final List<Student> studentBoxList =
+      Hive.box<Student>('Student').values.toList();
+  late List<Student> displayStudent = List<Student>.from(studentBoxList);
+
+  void searchStudentList(String value) {
     setState(() {
       displayStudent = studentBoxList
           .where((element) =>
@@ -52,6 +55,9 @@ class _ViewStudentsState extends State<ViewStudents> {
               icon: Icons.search,
               hintText: "Search Names",
               controller: _searchController,
+              onChanged: (value) {
+                searchStudentList(value);
+              },
             ),
             Expanded(
               child: ValueListenableBuilder(
@@ -59,6 +65,8 @@ class _ViewStudentsState extends State<ViewStudents> {
                 builder: (BuildContext context, Box<Student> studenstList,
                     Widget? child) {
                   return ListView.separated(
+                    separatorBuilder: (context, index) => const Divider(),
+                    itemCount: studenstList.length,
                     itemBuilder: (context, index) {
                       final key = studenstList.keys.toList()[index];
                       final student = studenstList.get(key);
@@ -66,19 +74,21 @@ class _ViewStudentsState extends State<ViewStudents> {
                         leading: const CircleAvatar(),
                         title: Text(student!.name),
                         trailing: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            studenstList.delete(student.key);
+                          },
                           icon: const Icon(Icons.delete),
                         ),
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (conntext) => DetailsStudent()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (conntext) => DetailsStudent(),
+                            ),
+                          );
                         },
                       );
                     },
-                    separatorBuilder: (context, index) => const Divider(),
-                    itemCount: studenstList.length,
                   );
                 },
               ),

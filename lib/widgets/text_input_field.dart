@@ -4,18 +4,22 @@ class TextInputField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final IconData icon;
-  const TextInputField(
-      {Key? key,
-      required this.controller,
-      required this.hintText,
-      required this.icon})
-      : super(key: key);
+  final void Function(String)? onChanged;
+
+  const TextInputField({
+    Key? key,
+    required this.controller,
+    required this.hintText,
+    required this.icon,
+    this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
+        onChanged: onChanged,
         controller: controller,
         decoration: InputDecoration(
           prefixIcon: Icon(icon),

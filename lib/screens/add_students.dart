@@ -13,7 +13,7 @@ class AddStudent extends StatelessWidget {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
-  Future<void> addStudent(Box<Student> studentBox) async {
+  Future<void> addStudent(Box<Student> studentBox, BuildContext context) async {
     final name = _nameController.text;
     final age = _ageController.text;
     final email = _emailController.text;
@@ -28,8 +28,8 @@ class AddStudent extends StatelessWidget {
       phone: phone,
     );
     await studentBox.add(_student);
-    print(_nameController.text.toString());
-    print("");
+    print(_student);
+    Navigator.pop(context);
   }
 
   @override
@@ -95,8 +95,7 @@ class AddStudent extends StatelessWidget {
             ButtonRounded(
               buttonText: "Add Student",
               onpress: () {
-                addStudent(studentBox);
-                print(studentBox.isEmpty);
+                addStudent(studentBox, context);
               },
             ),
           ],
