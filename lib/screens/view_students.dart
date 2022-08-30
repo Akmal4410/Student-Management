@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/screens/add_students.dart';
 import 'package:main_project_hive/screens/details_student.dart';
@@ -28,8 +27,16 @@ class _ViewStudentsState extends State<ViewStudents> {
     super.dispose();
   }
 
-  final studentBoxList = Hive.box('Student').values.toList();
+  final studentBoxList = Hive.box<Student>('Student').values.toList();
   late List displayStudent = List<Student>.from(studentBoxList);
+  searchStudentList(String value) {
+    setState(() {
+      displayStudent = studentBoxList
+          .where((element) =>
+              element.name.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
