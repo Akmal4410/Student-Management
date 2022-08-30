@@ -83,7 +83,14 @@ class _ViewStudentsState extends State<ViewStudents> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (conntext) => DetailsStudent(),
+                              builder: (conntext) => DetailsStudent(
+                                name: student.name,
+                                age: student.age,
+                                email: student.email,
+                                phone: student.phone,
+                                id: student.key,
+                                studebtBox: studentBox!,
+                              ),
                             ),
                           );
                         },

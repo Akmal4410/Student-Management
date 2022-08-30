@@ -1,14 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
 import 'package:main_project_hive/widgets/details.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
-class DetailsStudent extends StatelessWidget {
-  DetailsStudent({Key? key}) : super(key: key);
+class DetailsStudent extends StatefulWidget {
+  DetailsStudent({
+    Key? key,
+    required this.name,
+    required this.age,
+    required this.email,
+    required this.phone,
+    required this.studebtBox,
+    required this.id,
+  }) : super(key: key);
+
+  Box<Student> studebtBox;
+
+  final String name;
+  final String age;
+  final String email;
+  final String phone;
+  final int id;
+
+  @override
+  State<DetailsStudent> createState() => _DetailsStudentState();
+}
+
+class _DetailsStudentState extends State<DetailsStudent> {
   final _nameController = TextEditingController();
+
   final _ageController = TextEditingController();
+
   final _emailController = TextEditingController();
+
   final _phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +45,7 @@ class DetailsStudent extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              editStudent(context);
+              editStudentPressed(context);
             },
             icon: const Icon(Icons.edit),
           ),
@@ -28,7 +56,7 @@ class DetailsStudent extends StatelessWidget {
         child: SizedBox(
           width: double.infinity,
           child: ListView(
-            children: const [
+            children: [
               SizedBox(height: 30),
               Center(
                 child: CircleAvatar(
@@ -36,10 +64,18 @@ class DetailsStudent extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30),
-              Details(labeltext: 'Name : Akmal'),
-              Details(labeltext: 'Age : 19'),
-              Details(labeltext: 'Email : akmalmahmookinan@gmail.com'),
-              Details(labeltext: 'Ph : 8138845540'),
+              Details(
+                labeltext: 'Name : ${widget.name}',
+              ),
+              Details(
+                labeltext: 'Age : ${widget.age}',
+              ),
+              Details(
+                labeltext: 'Email : ${widget.email}',
+              ),
+              Details(
+                labeltext: 'Ph : ${widget.phone}',
+              ),
             ],
           ),
         ),
@@ -47,10 +83,10 @@ class DetailsStudent extends StatelessWidget {
     );
   }
 
-  void editStudent(BuildContext context) {
+  void editStudentPressed(BuildContext context) {
     showDialog(
         context: context,
-        builder: (context) {
+        builder: (ctx) {
           return Dialog(
             backgroundColor: Colors.transparent,
             child: Container(
@@ -85,7 +121,9 @@ class DetailsStudent extends StatelessWidget {
                     ),
                     ButtonRounded(
                       buttonText: "Edit Student",
-                      onpress: () {},
+                      onpress: () {
+                        editStudent(widget.studebtBox, ctx, widget.id);
+                      },
                     )
                   ],
                 ),
@@ -93,5 +131,20 @@ class DetailsStudent extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Future<void> editStudent(
+      Box<Student> studentBox, BuildContext context, int id) async {
+    final name = _nameController.text;
+    final age = _ageController.text;
+    final email = _emailController.text;
+    final phone = _phoneController.text;
+    if (age.isEmpty || name.isEmpty || email.isEmpty || phone.isEmpty) {
+      return;
+    }
+    final _student = Student(name: name, age: age, email: email, phone: phone);
+    await widget.studebtBox.put(id, _student);
+    print(_student);
+    Navigator.pop(context);
   }
 }

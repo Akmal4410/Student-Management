@@ -21,12 +21,7 @@ class AddStudent extends StatelessWidget {
     if (age.isEmpty || name.isEmpty || email.isEmpty || phone.isEmpty) {
       return;
     }
-    final _student = Student(
-      name: name,
-      age: age,
-      email: email,
-      phone: phone,
-    );
+    final _student = Student(name: name, age: age, email: email, phone: phone);
     await studentBox.add(_student);
     print(_student);
     Navigator.pop(context);
