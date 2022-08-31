@@ -22,7 +22,7 @@ class TextInputField extends StatelessWidget {
         onChanged: onChanged,
         controller: controller,
         decoration: InputDecoration(
-          prefixIcon: Icon(icon),
+          prefixIcon: Icon(icon, color: Color.fromRGBO(173, 194, 169, 1)),
           hintText: hintText,
           filled: true,
           fillColor: const Color.fromARGB(255, 235, 233, 233),

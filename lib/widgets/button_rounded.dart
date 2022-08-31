@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class ButtonRounded extends StatelessWidget {
@@ -14,6 +12,7 @@ class ButtonRounded extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onpress,
         style: ElevatedButton.styleFrom(
+          primary: Color.fromRGBO(173, 194, 169, 1),
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(vertical: 20),
         ),

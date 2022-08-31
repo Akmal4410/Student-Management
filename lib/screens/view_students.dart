@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/screens/add_students.dart';
 import 'package:main_project_hive/screens/details_student.dart';
-import 'package:main_project_hive/widgets/text_input_field.dart';
+import 'package:main_project_hive/screens/search_screen.dart';
 
 class ViewStudents extends StatefulWidget {
   const ViewStudents({Key? key}) : super(key: key);
@@ -13,7 +13,6 @@ class ViewStudents extends StatefulWidget {
 }
 
 class _ViewStudentsState extends State<ViewStudents> {
-  final _searchController = TextEditingController();
   Box<Student>? studentBox;
 
   @override
@@ -28,37 +27,27 @@ class _ViewStudentsState extends State<ViewStudents> {
     super.dispose();
   }
 
-  final List<Student> studentBoxList =
-      Hive.box<Student>('Student').values.toList();
-  late List<Student> displayStudent = List<Student>.from(studentBoxList);
-
-  void searchStudentList(String value) {
-    setState(() {
-      displayStudent = studentBoxList
-          .where((element) =>
-              element.name.toLowerCase().contains(value.toLowerCase()))
-          .toList();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(254, 245, 237, 1),
       appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(173, 194, 169, 1),
         title: const Text("View Students"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchScreen()));
+            },
+            icon: const Icon(Icons.search),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           children: [
-            TextInputField(
-              icon: Icons.search,
-              hintText: "Search Names",
-              controller: _searchController,
-              onChanged: (value) {
-                searchStudentList(value);
-              },
-            ),
             Expanded(
               child: ValueListenableBuilder(
                 valueListenable: studentBox!.listenable(),
@@ -104,6 +93,7 @@ class _ViewStudentsState extends State<ViewStudents> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromRGBO(173, 194, 169, 1),
         onPressed: () {
           Navigator.push(
             context,
@@ -112,7 +102,7 @@ class _ViewStudentsState extends State<ViewStudents> {
             ),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

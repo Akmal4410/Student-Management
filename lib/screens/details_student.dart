@@ -40,7 +40,9 @@ class _DetailsStudentState extends State<DetailsStudent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(254, 245, 237, 1),
       appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(173, 194, 169, 1),
         title: const Text("Student Details"),
         actions: [
           IconButton(
@@ -144,7 +146,7 @@ class _DetailsStudentState extends State<DetailsStudent> {
     }
     final _student = Student(name: name, age: age, email: email, phone: phone);
     await widget.studebtBox.put(id, _student);
-    print(_student);
+
     Navigator.pop(context);
   }
 }

@@ -30,7 +30,9 @@ class AddStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(254, 245, 237, 1),
       appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(173, 194, 169, 1),
         title: const Text("Add Student"),
       ),
       body: Padding(
