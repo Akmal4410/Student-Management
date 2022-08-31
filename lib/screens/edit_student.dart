@@ -1,66 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
-class AddStudent extends StatefulWidget {
-  AddStudent({Key? key, required this.studentBox}) : super(key: key);
+class EditStudent extends StatelessWidget {
+  EditStudent({Key? key}) : super(key: key);
 
-  Box<Student> studentBox;
-
-  @override
-  State<AddStudent> createState() => _AddStudentState();
-}
-
-class _AddStudentState extends State<AddStudent> {
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
-
-  File? image;
-  String? imagePath;
-
-  Future<void> addPhoto() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) {
-        return;
-      }
-      final imageFile = File(image.path);
-      setState(() {
-        this.image = imageFile;
-        this.imagePath = image.path;
-      });
-    } catch (e) {
-      print("Something went wrong $e");
-    }
-  }
-
-  Future<void> addStudent(Box<Student> studentBox, BuildContext context) async {
-    final name = _nameController.text;
-    final age = _ageController.text;
-    final email = _emailController.text;
-    final phone = _phoneController.text;
-    if (age.isEmpty ||
-        name.isEmpty ||
-        email.isEmpty ||
-        phone.isEmpty ||
-        imagePath!.isEmpty) {
-      return;
-    }
-    print(image);
-
-    final student = Student(
-        name: name, age: age, email: email, phone: phone, image: imagePath!);
-    await studentBox.add(student);
-
-    Navigator.pop(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +16,7 @@ class _AddStudentState extends State<AddStudent> {
       backgroundColor: const Color.fromRGBO(254, 245, 237, 1),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(173, 194, 169, 1),
-        title: const Text("Add Student"),
+        title: const Text("Edit Student"),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -77,12 +25,12 @@ class _AddStudentState extends State<AddStudent> {
             const SizedBox(height: 50),
             Stack(
               children: [
-                Center(
+                const Center(
                   child: CircleAvatar(
-                    backgroundImage: (image != null)
-                        ? FileImage(image!)
-                        : AssetImage("assets/image/avatar.jpeg")
-                            as ImageProvider,
+                    // backgroundImage: (image != null)
+                    //     ? FileImage(image!)
+                    //     : AssetImage("assets/image/avatar.jpeg")
+                    //         as ImageProvider,
                     radius: 60,
                   ),
                 ),
@@ -98,7 +46,7 @@ class _AddStudentState extends State<AddStudent> {
                     ),
                     child: IconButton(
                       onPressed: () {
-                        addPhoto();
+                        // addPhoto();
                       },
                       icon: const Icon(
                         Icons.arrow_upward_outlined,
@@ -132,9 +80,7 @@ class _AddStudentState extends State<AddStudent> {
             ),
             ButtonRounded(
               buttonText: "Add Student",
-              onpress: () {
-                addStudent(widget.studentBox, context);
-              },
+              onpress: () {},
             ),
           ],
         ),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:main_project_hive/models/student_model.dart';
@@ -50,8 +52,12 @@ class _SearchScreenState extends State<SearchScreen> {
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) {
+                  File imageFile = File(studentBoxList[index].image);
                   return ListTile(
-                    leading: CircleAvatar(),
+                    leading: CircleAvatar(
+                      backgroundImage: FileImage(imageFile),
+                      radius: 40,
+                    ),
                     title: Text(displayStudent[index].name),
                   );
                 },

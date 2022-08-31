@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/screens/add_students.dart';
 import 'package:main_project_hive/screens/details_student.dart';
+import 'package:main_project_hive/screens/edit_student.dart';
 import 'package:main_project_hive/screens/search_screen.dart';
 
 class ViewStudents extends StatefulWidget {
@@ -59,30 +62,42 @@ class _ViewStudentsState extends State<ViewStudents> {
                     itemBuilder: (context, index) {
                       final key = studenstList.keys.toList()[index];
                       final student = studenstList.get(key);
+                      File imageFile = File(student!.image);
                       return ListTile(
-                        leading: const CircleAvatar(),
-                        title: Text(student!.name),
-                        trailing: IconButton(
-                          onPressed: () {
-                            studenstList.delete(student.key);
-                          },
-                          icon: const Icon(Icons.delete),
-                        ),
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (conntext) => DetailsStudent(
-                                name: student.name,
-                                age: student.age,
-                                email: student.email,
-                                phone: student.phone,
-                                id: student.key,
-                                studebtBox: studentBox!,
-                              ),
+                              builder: (conntext) =>
+                                  DetailsStudent(student: student),
                             ),
                           );
                         },
+                        leading: CircleAvatar(
+                          radius: 40,
+                          backgroundImage: FileImage(imageFile),
+                        ),
+                        title: Text(student.name),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EditStudent()));
+                              },
+                              icon: const Icon(Icons.edit),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                studenstList.delete(student.key);
+                              },
+                              icon: const Icon(Icons.delete),
+                            ),
+                          ],
+                        ),
                       );
                     },
                   );

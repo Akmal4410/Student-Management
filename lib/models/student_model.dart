@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:hive_flutter/hive_flutter.dart';
 part 'student_model.g.dart';
 
@@ -15,10 +17,14 @@ class Student extends HiveObject {
   @HiveField(3)
   final String phone;
 
+  @HiveField(4)
+  final String image;
+
   Student({
     required this.name,
     required this.age,
     required this.email,
     required this.phone,
+    required this.image,
   });
 }
