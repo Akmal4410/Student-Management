@@ -50,20 +50,22 @@ class _SearchScreenState extends State<SearchScreen> {
               },
             ),
             Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  File imageFile = File(studentBoxList[index].image);
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: FileImage(imageFile),
-                      radius: 40,
-                    ),
-                    title: Text(displayStudent[index].name),
-                  );
-                },
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: displayStudent.length,
-              ),
+              child: (displayStudent.length != 0)
+                  ? ListView.separated(
+                      itemBuilder: (context, index) {
+                        File imageFile = File(studentBoxList[index].image);
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: FileImage(imageFile),
+                            radius: 40,
+                          ),
+                          title: Text(displayStudent[index].name),
+                        );
+                      },
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: displayStudent.length,
+                    )
+                  : Center(child: Text("The data is not Found")),
             ),
           ],
         ),

@@ -90,13 +90,19 @@ class _ViewStudentsState extends State<ViewStudents> {
                                               studentBox: studentBox!,
                                             )));
                               },
-                              icon: const Icon(Icons.edit),
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Color.fromRGBO(173, 194, 169, 1),
+                              ),
                             ),
                             IconButton(
                               onPressed: () {
                                 studenstList.delete(student.key);
                               },
-                              icon: const Icon(Icons.delete),
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Color.fromRGBO(173, 194, 169, 1),
+                              ),
                             ),
                           ],
                         ),
