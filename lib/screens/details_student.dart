@@ -4,7 +4,7 @@ import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/widgets/details.dart';
 
 class DetailsStudent extends StatelessWidget {
-  DetailsStudent({Key? key, required this.student}) : super(key: key);
+  const DetailsStudent({Key? key, required this.student}) : super(key: key);
 
   final Student student;
 

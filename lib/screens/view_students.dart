@@ -85,8 +85,10 @@ class _ViewStudentsState extends State<ViewStudents> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditStudent(student: student)));
+                                        builder: (context) => EditStudent(
+                                              student: student,
+                                              studentBox: studentBox!,
+                                            )));
                               },
                               icon: const Icon(Icons.edit),
                             ),

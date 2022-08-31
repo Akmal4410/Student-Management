@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
@@ -7,7 +8,9 @@ import 'package:main_project_hive/widgets/text_input_field.dart';
 
 class EditStudent extends StatefulWidget {
   final Student student;
-  const EditStudent({Key? key, required this.student}) : super(key: key);
+  final Box<Student> studentBox;
+  const EditStudent({Key? key, required this.student, required this.studentBox})
+      : super(key: key);
 
   @override
   State<EditStudent> createState() => _EditStudentState();
@@ -53,6 +56,11 @@ class _EditStudentState extends State<EditStudent> {
     if (name.isEmpty || age.isEmpty || email.isEmpty || phone.isEmpty) {
       return;
     }
+    final _student = Student(
+        name: name, age: age, email: email, phone: phone, image: imagePath!);
+    await widget.studentBox.put(widget.student.key, _student);
+    print(_student);
+    Navigator.pop(context);
   }
 
   @override
@@ -74,7 +82,7 @@ class _EditStudentState extends State<EditStudent> {
                   child: CircleAvatar(
                     backgroundImage: (imagePath != null)
                         ? FileImage(File(imagePath!))
-                        : AssetImage("assets/image/avatar.jpeg")
+                        : const AssetImage("assets/image/avatar.jpeg")
                             as ImageProvider,
                     radius: 60,
                   ),
@@ -125,7 +133,9 @@ class _EditStudentState extends State<EditStudent> {
             ),
             ButtonRounded(
               buttonText: "Edit Student",
-              onpress: () {},
+              onpress: () {
+                editStudent();
+              },
             ),
           ],
         ),
