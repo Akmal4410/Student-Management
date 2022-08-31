@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:main_project_hive/models/student_model.dart';
@@ -86,7 +85,8 @@ class _ViewStudentsState extends State<ViewStudents> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => EditStudent()));
+                                        builder: (context) =>
+                                            EditStudent(student: student)));
                               },
                               icon: const Icon(Icons.edit),
                             ),

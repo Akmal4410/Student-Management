@@ -22,7 +22,7 @@ class _AddStudentState extends State<AddStudent> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
-  File? image;
+  // File? image;
   String? imagePath;
 
   Future<void> addPhoto() async {
@@ -31,9 +31,9 @@ class _AddStudentState extends State<AddStudent> {
       if (image == null) {
         return;
       }
-      final imageFile = File(image.path);
+      // final imageFile = File(image.path);
       setState(() {
-        this.image = imageFile;
+        // this.image = imageFile;
         this.imagePath = image.path;
       });
     } catch (e) {
@@ -53,7 +53,7 @@ class _AddStudentState extends State<AddStudent> {
         imagePath!.isEmpty) {
       return;
     }
-    print(image);
+    // print(image);
 
     final student = Student(
         name: name, age: age, email: email, phone: phone, image: imagePath!);
@@ -79,8 +79,9 @@ class _AddStudentState extends State<AddStudent> {
               children: [
                 Center(
                   child: CircleAvatar(
-                    backgroundImage: (image != null)
-                        ? FileImage(image!)
+                    backgroundImage: (imagePath != null)
+                        // ? FileImage(image!)
+                        ? FileImage(File(imagePath!))
                         : AssetImage("assets/image/avatar.jpeg")
                             as ImageProvider,
                     radius: 60,

@@ -1,19 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/widgets/details.dart';
 
-class DetailsStudent extends StatefulWidget {
-  const DetailsStudent({Key? key, required this.student}) : super(key: key);
+class DetailsStudent extends StatelessWidget {
+  DetailsStudent({Key? key, required this.student}) : super(key: key);
 
   final Student student;
 
-  @override
-  State<DetailsStudent> createState() => _DetailsStudentState();
-}
-
-class _DetailsStudentState extends State<DetailsStudent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,22 +25,22 @@ class _DetailsStudentState extends State<DetailsStudent> {
               const SizedBox(height: 30),
               Center(
                 child: CircleAvatar(
-                  backgroundImage: FileImage(File(widget.student.image)),
+                  backgroundImage: FileImage(File(student.image)),
                   radius: 60,
                 ),
               ),
               const SizedBox(height: 30),
               Details(
-                labeltext: 'Name : ${widget.student.name}',
+                labeltext: 'Name : ${student.name}',
               ),
               Details(
-                labeltext: 'Age : ${widget.student.age}',
+                labeltext: 'Age : ${student.age}',
               ),
               Details(
-                labeltext: 'Email : ${widget.student.email}',
+                labeltext: 'Email : ${student.email}',
               ),
               Details(
-                labeltext: 'Ph : ${widget.student.phone}',
+                labeltext: 'Ph : ${student.phone}',
               ),
             ],
           ),

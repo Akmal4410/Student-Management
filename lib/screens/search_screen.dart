@@ -6,7 +6,7 @@ import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();

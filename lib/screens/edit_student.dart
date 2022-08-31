@@ -1,14 +1,59 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
-class EditStudent extends StatelessWidget {
-  EditStudent({Key? key}) : super(key: key);
+class EditStudent extends StatefulWidget {
+  final Student student;
+  const EditStudent({Key? key, required this.student}) : super(key: key);
 
-  final _nameController = TextEditingController();
-  final _ageController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
+  @override
+  State<EditStudent> createState() => _EditStudentState();
+}
+
+class _EditStudentState extends State<EditStudent> {
+  TextEditingController? _nameController;
+  TextEditingController? _ageController;
+  TextEditingController? _emailController;
+  TextEditingController? _phoneController;
+
+  String? imagePath;
+
+  @override
+  void initState() {
+    _nameController = TextEditingController(text: widget.student.name);
+    _ageController = TextEditingController(text: widget.student.age);
+    _emailController = TextEditingController(text: widget.student.email);
+    _phoneController = TextEditingController(text: widget.student.phone);
+    imagePath = widget.student.image;
+    super.initState();
+  }
+
+  Future<void> updatePhoto() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) {
+        return;
+      }
+      setState(() {
+        imagePath = image.path;
+      });
+    } catch (e) {
+      print("Something went wrong $e");
+    }
+  }
+
+  Future<void> editStudent() async {
+    final name = _nameController!.text;
+    final age = _ageController!.text;
+    final email = _emailController!.text;
+    final phone = _phoneController!.text;
+    if (name.isEmpty || age.isEmpty || email.isEmpty || phone.isEmpty) {
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +70,12 @@ class EditStudent extends StatelessWidget {
             const SizedBox(height: 50),
             Stack(
               children: [
-                const Center(
+                Center(
                   child: CircleAvatar(
-                    // backgroundImage: (image != null)
-                    //     ? FileImage(image!)
-                    //     : AssetImage("assets/image/avatar.jpeg")
-                    //         as ImageProvider,
+                    backgroundImage: (imagePath != null)
+                        ? FileImage(File(imagePath!))
+                        : AssetImage("assets/image/avatar.jpeg")
+                            as ImageProvider,
                     radius: 60,
                   ),
                 ),
@@ -46,7 +91,7 @@ class EditStudent extends StatelessWidget {
                     ),
                     child: IconButton(
                       onPressed: () {
-                        // addPhoto();
+                        updatePhoto();
                       },
                       icon: const Icon(
                         Icons.arrow_upward_outlined,
@@ -60,26 +105,26 @@ class EditStudent extends StatelessWidget {
             const SizedBox(height: 30),
             TextInputField(
               icon: Icons.person,
-              hintText: "Name",
-              controller: _nameController,
+              hintText: 'Name',
+              controller: _nameController!,
             ),
             TextInputField(
               icon: Icons.numbers,
-              hintText: "Age",
-              controller: _ageController,
+              hintText: 'Age',
+              controller: _ageController!,
             ),
             TextInputField(
               icon: Icons.email,
-              hintText: "Email",
-              controller: _emailController,
+              hintText: 'Email',
+              controller: _emailController!,
             ),
             TextInputField(
               icon: Icons.phone,
-              hintText: "Phone number",
-              controller: _phoneController,
+              hintText: 'Phone',
+              controller: _phoneController!,
             ),
             ButtonRounded(
-              buttonText: "Add Student",
+              buttonText: "Edit Student",
               onpress: () {},
             ),
           ],
