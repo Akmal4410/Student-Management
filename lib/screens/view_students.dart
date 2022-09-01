@@ -29,6 +29,38 @@ class _ViewStudentsState extends State<ViewStudents> {
     super.dispose();
   }
 
+  void showDeletedAlertBox(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            title: Column(
+              children: const [
+                Text("Student Deleted"),
+                Divider(),
+              ],
+            ),
+            content:
+                const Text("Student deleted successfully from the database"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: const Text('Ok'),
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<void> deleteStudent(Box<Student> studenstList, Student student) async {
+    await studenstList.delete(student.key);
+    showDeletedAlertBox(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,12 +115,14 @@ class _ViewStudentsState extends State<ViewStudents> {
                             IconButton(
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => EditStudent(
-                                              student: student,
-                                              studentBox: studentBox!,
-                                            )));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditStudent(
+                                      student: student,
+                                      studentBox: studentBox!,
+                                    ),
+                                  ),
+                                );
                               },
                               icon: const Icon(
                                 Icons.edit,
@@ -97,7 +131,7 @@ class _ViewStudentsState extends State<ViewStudents> {
                             ),
                             IconButton(
                               onPressed: () {
-                                studenstList.delete(student.key);
+                                deleteStudent(studenstList, student);
                               },
                               icon: const Icon(
                                 Icons.delete,

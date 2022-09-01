@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:main_project_hive/models/student_model.dart';
+import 'package:main_project_hive/screens/view_students.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
@@ -53,13 +53,39 @@ class _AddStudentState extends State<AddStudent> {
         imagePath!.isEmpty) {
       return;
     }
-    // print(image);
 
     final student = Student(
         name: name, age: age, email: email, phone: phone, image: imagePath!);
     await studentBox.add(student);
 
-    Navigator.pop(context);
+    showAddedAlertBox(context);
+  }
+
+  void showAddedAlertBox(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            title: Column(
+              children: const [Text("Student Added"), Divider()],
+            ),
+            content: const Text("Student added successfully to the database"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                      ctx,
+                      MaterialPageRoute(
+                          builder: (context) => const ViewStudents()),
+                      (route) => false);
+                },
+                child: const Text('Ok'),
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -82,7 +108,7 @@ class _AddStudentState extends State<AddStudent> {
                     backgroundImage: (imagePath != null)
                         // ? FileImage(image!)
                         ? FileImage(File(imagePath!))
-                        : AssetImage("assets/image/avatar.jpeg")
+                        : const AssetImage("assets/image/avatar.jpeg")
                             as ImageProvider,
                     radius: 60,
                   ),
