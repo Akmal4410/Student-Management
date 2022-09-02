@@ -169,7 +169,7 @@ class _AddStudentState extends State<AddStudent> {
           child: CircleAvatar(
             backgroundImage: (imagePath != null)
                 ? FileImage(File(imagePath!))
-                : const AssetImage("assets/image/avatar.jpeg") as ImageProvider,
+                : const AssetImage("assets/image/ava.jpeg") as ImageProvider,
             radius: 60,
           ),
         ),
