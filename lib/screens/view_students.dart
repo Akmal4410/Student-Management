@@ -19,6 +19,8 @@ class _ViewStudentsState extends State<ViewStudents> {
 
   @override
   void initState() {
+    Hive.openBox<Student>('Student');
+
     studentBox = Hive.box<Student>('Student');
     super.initState();
   }

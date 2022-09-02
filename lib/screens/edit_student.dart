@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:main_project_hive/models/student_model.dart';
+import 'package:main_project_hive/screens/view_students.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
@@ -80,8 +81,7 @@ class _EditStudentState extends State<EditStudent> {
                 onPressed: () {
                   // Navigator.pushAndRemoveUntil(
                   //     ctx,
-                  //     MaterialPageRoute(
-                  //         builder: (ctx1) => const ViewStudents()),
+                  //     MaterialPageRoute(builder: (ctx) => const ViewStudents()),
                   //     (route) => false);
                   Navigator.pop(ctx);
                 },

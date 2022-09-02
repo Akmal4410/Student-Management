@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:main_project_hive/models/student_model.dart';
-import 'package:main_project_hive/screens/view_students.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
@@ -59,6 +58,7 @@ class _AddStudentState extends State<AddStudent> {
     await studentBox.add(student);
 
     showAddedAlertBox(context);
+
     _nameController.clear();
     _ageController.clear();
     _emailController.clear();
