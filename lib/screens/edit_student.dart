@@ -36,17 +36,13 @@ class _EditStudentState extends State<EditStudent> {
   }
 
   Future<void> updatePhoto() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) {
-        return;
-      }
-      setState(() {
-        imagePath = image.path;
-      });
-    } catch (e) {
-      print("Something went wrong $e");
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return;
     }
+    setState(() {
+      imagePath = image.path;
+    });
   }
 
   Future<void> editStudent() async {
@@ -61,7 +57,6 @@ class _EditStudentState extends State<EditStudent> {
         name: name, age: age, email: email, phone: phone, image: imagePath!);
     await widget.studentBox.put(widget.student.key, _student);
 
-    // Navigator.pop(context);
     showEditedAlertBox(context);
   }
 
@@ -79,11 +74,11 @@ class _EditStudentState extends State<EditStudent> {
             actions: [
               TextButton(
                 onPressed: () {
-                  // Navigator.pushAndRemoveUntil(
-                  //     ctx,
-                  //     MaterialPageRoute(builder: (ctx) => const ViewStudents()),
-                  //     (route) => false);
-                  Navigator.pop(ctx);
+                  Navigator.pushAndRemoveUntil(
+                      ctx,
+                      MaterialPageRoute(builder: (ctx) => const ViewStudents()),
+                      (route) => false);
+                  // Navigator.pop(ctx);
                 },
                 child: const Text('Ok'),
               ),

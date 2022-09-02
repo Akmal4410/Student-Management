@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:main_project_hive/models/student_model.dart';
+import 'package:main_project_hive/screens/view_students.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
@@ -25,19 +26,15 @@ class _AddStudentState extends State<AddStudent> {
   String? imagePath;
 
   Future<void> addPhoto() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) {
-        return;
-      }
-      // final imageFile = File(image.path);
-      setState(() {
-        // this.image = imageFile;
-        this.imagePath = image.path;
-      });
-    } catch (e) {
-      print("Something went wrong $e");
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return;
     }
+    // final imageFile = File(image.path);
+    setState(() {
+      // this.image = imageFile;
+      this.imagePath = image.path;
+    });
   }
 
   Future<void> addStudent(Box<Student> studentBox, BuildContext context) async {
@@ -58,11 +55,6 @@ class _AddStudentState extends State<AddStudent> {
     await studentBox.add(student);
 
     showAddedAlertBox(context);
-
-    _nameController.clear();
-    _ageController.clear();
-    _emailController.clear();
-    _phoneController.clear();
   }
 
   void showAddedAlertBox(BuildContext context) {
@@ -82,12 +74,12 @@ class _AddStudentState extends State<AddStudent> {
             actions: [
               TextButton(
                 onPressed: () {
-                  // Navigator.pushAndRemoveUntil(
-                  //     ctx,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const ViewStudents()),
-                  //     (route) => false);
-                  Navigator.pop(ctx);
+                  Navigator.pushAndRemoveUntil(
+                      ctx,
+                      MaterialPageRoute(
+                          builder: (context) => const ViewStudents()),
+                      (route) => false);
+                  // Navigator.pop(ctx);
                 },
                 child: const Text('Ok'),
               ),
