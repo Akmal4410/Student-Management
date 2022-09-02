@@ -18,6 +18,8 @@ class EditStudent extends StatefulWidget {
 }
 
 class _EditStudentState extends State<EditStudent> {
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController? _nameController;
   TextEditingController? _ageController;
   TextEditingController? _emailController;
@@ -97,71 +99,96 @@ class _EditStudentState extends State<EditStudent> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: ListView(
-          children: [
-            const SizedBox(height: 50),
-            Stack(
-              children: [
-                Center(
-                  child: CircleAvatar(
-                    backgroundImage: (imagePath != null)
-                        ? FileImage(File(imagePath!))
-                        : const AssetImage("assets/image/avatar.jpeg")
-                            as ImageProvider,
-                    radius: 60,
-                  ),
-                ),
-                Positioned(
-                  top: 65,
-                  left: 210,
-                  child: Container(
-                    height: 40,
-                    width: 50,
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(173, 194, 169, 1),
-                      shape: BoxShape.circle,
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              const SizedBox(height: 50),
+              Stack(
+                children: [
+                  Center(
+                    child: CircleAvatar(
+                      backgroundImage: (imagePath != null)
+                          ? FileImage(File(imagePath!))
+                          : const AssetImage("assets/image/avatar.jpeg")
+                              as ImageProvider,
+                      radius: 60,
                     ),
-                    child: IconButton(
-                      onPressed: () {
-                        updatePhoto();
-                      },
-                      icon: const Icon(
-                        Icons.arrow_upward_outlined,
-                        color: Colors.white,
+                  ),
+                  Positioned(
+                    top: 65,
+                    left: 210,
+                    child: Container(
+                      height: 40,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        color: Color.fromRGBO(173, 194, 169, 1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          updatePhoto();
+                        },
+                        icon: const Icon(
+                          Icons.arrow_upward_outlined,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-            TextInputField(
-              icon: Icons.person,
-              hintText: 'Name',
-              controller: _nameController!,
-            ),
-            TextInputField(
-              icon: Icons.numbers,
-              hintText: 'Age',
-              controller: _ageController!,
-            ),
-            TextInputField(
-              icon: Icons.email,
-              hintText: 'Email',
-              controller: _emailController!,
-            ),
-            TextInputField(
-              icon: Icons.phone,
-              hintText: 'Phone',
-              controller: _phoneController!,
-            ),
-            ButtonRounded(
-              buttonText: "Edit Student",
-              onpress: () {
-                editStudent();
-              },
-            ),
-          ],
+                ],
+              ),
+              const SizedBox(height: 30),
+              TextInputField(
+                icon: Icons.person,
+                hintText: 'Name',
+                controller: _nameController!,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "The Name field is emplty";
+                  }
+                },
+              ),
+              TextInputField(
+                icon: Icons.numbers,
+                hintText: 'Age',
+                controller: _ageController!,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "The Age field is emplty";
+                  }
+                },
+              ),
+              TextInputField(
+                icon: Icons.email,
+                hintText: 'Email',
+                controller: _emailController!,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "The Email field is emplty";
+                  }
+                },
+              ),
+              TextInputField(
+                icon: Icons.phone,
+                hintText: 'Phone',
+                controller: _phoneController!,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "The Phone field is emplty";
+                  }
+                },
+              ),
+              ButtonRounded(
+                buttonText: "Edit Student",
+                onpress: () {
+                  if (_formKey.currentState!.validate()) {
+                    editStudent();
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

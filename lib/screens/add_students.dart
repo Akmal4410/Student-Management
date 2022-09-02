@@ -17,6 +17,8 @@ class AddStudent extends StatefulWidget {
 }
 
 class _AddStudentState extends State<AddStudent> {
+  final _formKey = GlobalKey<FormState>();
+
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
   final _emailController = TextEditingController();
@@ -98,74 +100,101 @@ class _AddStudentState extends State<AddStudent> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: ListView(
-          children: [
-            const SizedBox(height: 50),
-            Stack(
-              children: [
-                Center(
-                  child: CircleAvatar(
-                    backgroundImage: (imagePath != null)
-                        // ? FileImage(image!)
-                        ? FileImage(File(imagePath!))
-                        : const AssetImage("assets/image/avatar.jpeg")
-                            as ImageProvider,
-                    radius: 60,
-                  ),
-                ),
-                Positioned(
-                  top: 65,
-                  left: 210,
-                  child: Container(
-                    height: 40,
-                    width: 50,
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(173, 194, 169, 1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        addPhoto();
-                      },
-                      icon: const Icon(
-                        Icons.arrow_upward_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-            TextInputField(
-              icon: Icons.person,
-              hintText: "Name",
-              controller: _nameController,
-            ),
-            TextInputField(
-              icon: Icons.numbers,
-              hintText: "Age",
-              controller: _ageController,
-            ),
-            TextInputField(
-              icon: Icons.email,
-              hintText: "Email",
-              controller: _emailController,
-            ),
-            TextInputField(
-              icon: Icons.phone,
-              hintText: "Phone number",
-              controller: _phoneController,
-            ),
-            ButtonRounded(
-              buttonText: "Add Student",
-              onpress: () {
-                addStudent(widget.studentBox, context);
-              },
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              const SizedBox(height: 50),
+              profilePicture(),
+              const SizedBox(height: 30),
+              TextInputField(
+                icon: Icons.person,
+                hintText: "Name",
+                controller: _nameController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "The Name field is emplty";
+                  }
+                },
+              ),
+              TextInputField(
+                icon: Icons.numbers,
+                hintText: "Age",
+                controller: _ageController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "The Age field is emplty";
+                  }
+                },
+              ),
+              TextInputField(
+                icon: Icons.email,
+                hintText: "Email",
+                controller: _emailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "The Email field is emplty";
+                  }
+                },
+              ),
+              TextInputField(
+                icon: Icons.phone,
+                hintText: "Phone number",
+                controller: _phoneController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "The Phone field is emplty";
+                  }
+                },
+              ),
+              ButtonRounded(
+                buttonText: "Add Student",
+                onpress: () {
+                  if (_formKey.currentState!.validate()) {
+                    addStudent(widget.studentBox, context);
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget profilePicture() {
+    return Stack(
+      children: [
+        Center(
+          child: CircleAvatar(
+            backgroundImage: (imagePath != null)
+                ? FileImage(File(imagePath!))
+                : const AssetImage("assets/image/avatar.jpeg") as ImageProvider,
+            radius: 60,
+          ),
+        ),
+        Positioned(
+          top: 65,
+          left: 210,
+          child: Container(
+            height: 40,
+            width: 50,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(173, 194, 169, 1),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              onPressed: () {
+                addPhoto();
+              },
+              icon: const Icon(
+                Icons.arrow_upward_outlined,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

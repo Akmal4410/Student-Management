@@ -42,6 +42,9 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           children: [
             TextInputField(
+              validator: (value) {
+                return;
+              },
               icon: Icons.search,
               hintText: "Search Names",
               controller: _searchController,

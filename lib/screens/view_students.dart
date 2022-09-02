@@ -25,12 +25,6 @@ class _ViewStudentsState extends State<ViewStudents> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   Hive.close();
-  //   super.dispose();
-  // }
-
   void showDeletedAlertBox(BuildContext context) {
     showDialog(
         context: context,

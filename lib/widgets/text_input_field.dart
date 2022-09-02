@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:main_project_hive/main.dart';
 
 class TextInputField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final IconData icon;
   final void Function(String)? onChanged;
+  final String? Function(String?) validator;
 
-  const TextInputField({
+  TextInputField({
     Key? key,
     required this.controller,
     required this.hintText,
     required this.icon,
     this.onChanged,
+    required this.validator,
   }) : super(key: key);
 
   @override
@@ -30,6 +33,7 @@ class TextInputField extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               borderSide: BorderSide.none),
         ),
+        validator: validator,
       ),
     );
   }
