@@ -59,8 +59,37 @@ class _EditStudentState extends State<EditStudent> {
     final _student = Student(
         name: name, age: age, email: email, phone: phone, image: imagePath!);
     await widget.studentBox.put(widget.student.key, _student);
-    print(_student);
-    Navigator.pop(context);
+
+    // Navigator.pop(context);
+    showEditedAlertBox(context);
+  }
+
+  void showEditedAlertBox(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            title: Column(
+              children: const [Text("Student Editd"), Divider()],
+            ),
+            content: const Text("Student edited successfully to the database"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  // Navigator.pushAndRemoveUntil(
+                  //     ctx,
+                  //     MaterialPageRoute(
+                  //         builder: (ctx1) => const ViewStudents()),
+                  //     (route) => false);
+                  Navigator.pop(ctx);
+                },
+                child: const Text('Ok'),
+              ),
+            ],
+          );
+        });
   }
 
   @override

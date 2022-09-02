@@ -58,6 +58,7 @@ class _ViewStudentsState extends State<ViewStudents> {
 
   Future<void> deleteStudent(Box<Student> studenstList, Student student) async {
     await studenstList.delete(student.key);
+
     showDeletedAlertBox(context);
   }
 

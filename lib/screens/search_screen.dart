@@ -53,7 +53,7 @@ class _SearchScreenState extends State<SearchScreen> {
               child: (displayStudent.length != 0)
                   ? ListView.separated(
                       itemBuilder: (context, index) {
-                        File imageFile = File(displayStudent[index].image);
+                        File imageFile = File(studentBoxList[index].image);
                         return ListTile(
                           leading: CircleAvatar(
                             backgroundImage: FileImage(imageFile),

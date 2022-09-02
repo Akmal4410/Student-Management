@@ -59,6 +59,10 @@ class _AddStudentState extends State<AddStudent> {
     await studentBox.add(student);
 
     showAddedAlertBox(context);
+    _nameController.clear();
+    _ageController.clear();
+    _emailController.clear();
+    _phoneController.clear();
   }
 
   void showAddedAlertBox(BuildContext context) {
@@ -69,17 +73,21 @@ class _AddStudentState extends State<AddStudent> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
             title: Column(
-              children: const [Text("Student Added"), Divider()],
+              children: const [
+                Text("Student Added"),
+                Divider(),
+              ],
             ),
             content: const Text("Student added successfully to the database"),
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                      ctx,
-                      MaterialPageRoute(
-                          builder: (context) => const ViewStudents()),
-                      (route) => false);
+                  // Navigator.pushAndRemoveUntil(
+                  //     ctx,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const ViewStudents()),
+                  //     (route) => false);
+                  Navigator.pop(ctx);
                 },
                 child: const Text('Ok'),
               ),
