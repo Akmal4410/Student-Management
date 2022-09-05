@@ -56,7 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
               child: (displayStudent.length != 0)
                   ? ListView.separated(
                       itemBuilder: (context, index) {
-                        File imageFile = File(studentBoxList[index].image);
+                        File imageFile = File(displayStudent[index].image);
                         return ListTile(
                           leading: CircleAvatar(
                             backgroundImage: FileImage(imageFile),
@@ -68,7 +68,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       separatorBuilder: (context, index) => const Divider(),
                       itemCount: displayStudent.length,
                     )
-                  : Center(child: Text("The data is not Found")),
+                  : const Center(child: Text("The data is not Found")),
             ),
           ],
         ),

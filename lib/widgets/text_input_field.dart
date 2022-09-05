@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:main_project_hive/main.dart';
 
 class TextInputField extends StatelessWidget {
   final TextEditingController controller;
@@ -8,7 +7,7 @@ class TextInputField extends StatelessWidget {
   final void Function(String)? onChanged;
   final String? Function(String?) validator;
 
-  TextInputField({
+  const TextInputField({
     Key? key,
     required this.controller,
     required this.hintText,
@@ -25,7 +24,7 @@ class TextInputField extends StatelessWidget {
         onChanged: onChanged,
         controller: controller,
         decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: Color.fromRGBO(173, 194, 169, 1)),
+          prefixIcon: Icon(icon, color: const Color.fromRGBO(173, 194, 169, 1)),
           hintText: hintText,
           filled: true,
           fillColor: const Color.fromARGB(255, 235, 233, 233),

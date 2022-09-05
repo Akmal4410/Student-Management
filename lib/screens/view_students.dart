@@ -19,8 +19,6 @@ class _ViewStudentsState extends State<ViewStudents> {
 
   @override
   void initState() {
-    Hive.openBox<Student>('Student');
-
     studentBox = Hive.box<Student>('Student');
     super.initState();
   }
@@ -54,7 +52,6 @@ class _ViewStudentsState extends State<ViewStudents> {
 
   Future<void> deleteStudent(Box<Student> studenstList, Student student) async {
     await studenstList.delete(student.key);
-
     showDeletedAlertBox(context);
   }
 
@@ -79,70 +76,7 @@ class _ViewStudentsState extends State<ViewStudents> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           children: [
-            Expanded(
-              child: ValueListenableBuilder(
-                valueListenable: studentBox!.listenable(),
-                builder: (BuildContext context, Box<Student> studenstList,
-                    Widget? child) {
-                  return ListView.separated(
-                    separatorBuilder: (context, index) => const Divider(),
-                    itemCount: studenstList.length,
-                    itemBuilder: (context, index) {
-                      final key = studenstList.keys.toList()[index];
-                      final student = studenstList.get(key);
-                      File imageFile = File(student!.image);
-                      return ListTile(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (conntext) =>
-                                  DetailsStudent(student: student),
-                            ),
-                          );
-                        },
-                        leading: CircleAvatar(
-                          radius: 40,
-                          backgroundImage: FileImage(imageFile),
-                        ),
-                        title: Text(student.name),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EditStudent(
-                                      student: student,
-                                      studentBox: studentBox!,
-                                    ),
-                                  ),
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.edit,
-                                color: Color.fromRGBO(173, 194, 169, 1),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                deleteStudent(studenstList, student);
-                              },
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Color.fromRGBO(173, 194, 169, 1),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
+            listAllStudent(),
           ],
         ),
       ),
@@ -157,6 +91,72 @@ class _ViewStudentsState extends State<ViewStudents> {
           );
         },
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget listAllStudent() {
+    return Expanded(
+      child: ValueListenableBuilder(
+        valueListenable: studentBox!.listenable(),
+        builder:
+            (BuildContext context, Box<Student> studenstList, Widget? child) {
+          return ListView.separated(
+            separatorBuilder: (context, index) => const Divider(),
+            itemCount: studenstList.length,
+            itemBuilder: (context, index) {
+              final key = studenstList.keys.toList()[index];
+              final student = studenstList.get(key);
+              File imageFile = File(student!.image);
+              return ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (conntext) => DetailsStudent(student: student),
+                    ),
+                  );
+                },
+                leading: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: FileImage(imageFile),
+                ),
+                title: Text(student.name),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditStudent(
+                              student: student,
+                              studentBox: studentBox!,
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Color.fromRGBO(173, 194, 169, 1),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        deleteStudent(studenstList, student);
+                      },
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Color.fromRGBO(173, 194, 169, 1),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

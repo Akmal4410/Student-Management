@@ -1,10 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/screens/view_students.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
+import 'package:main_project_hive/widgets/profile_picture.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
 class EditStudent extends StatefulWidget {
@@ -104,39 +104,11 @@ class _EditStudentState extends State<EditStudent> {
           child: ListView(
             children: [
               const SizedBox(height: 50),
-              Stack(
-                children: [
-                  Center(
-                    child: CircleAvatar(
-                      backgroundImage: (imagePath != null)
-                          ? FileImage(File(imagePath!))
-                          : const AssetImage("assets/image/avatar.jpeg")
-                              as ImageProvider,
-                      radius: 60,
-                    ),
-                  ),
-                  Positioned(
-                    top: 65,
-                    left: 210,
-                    child: Container(
-                      height: 40,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(173, 194, 169, 1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          updatePhoto();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_upward_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              ProfilePicture(
+                imagePath: imagePath!,
+                onPressed: () {
+                  updatePhoto();
+                },
               ),
               const SizedBox(height: 30),
               TextInputField(
@@ -147,6 +119,7 @@ class _EditStudentState extends State<EditStudent> {
                   if (value == null || value.isEmpty) {
                     return "The Name field is emplty";
                   }
+                  return null;
                 },
               ),
               TextInputField(
@@ -157,6 +130,7 @@ class _EditStudentState extends State<EditStudent> {
                   if (value == null || value.isEmpty) {
                     return "The Age field is emplty";
                   }
+                  return null;
                 },
               ),
               TextInputField(
@@ -167,6 +141,7 @@ class _EditStudentState extends State<EditStudent> {
                   if (value == null || value.isEmpty) {
                     return "The Email field is emplty";
                   }
+                  return null;
                 },
               ),
               TextInputField(
@@ -177,6 +152,7 @@ class _EditStudentState extends State<EditStudent> {
                   if (value == null || value.isEmpty) {
                     return "The Phone field is emplty";
                   }
+                  return null;
                 },
               ),
               ButtonRounded(

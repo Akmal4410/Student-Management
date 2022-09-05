@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ButtonRounded extends StatelessWidget {
-  ButtonRounded({required this.buttonText, required this.onpress});
+  const ButtonRounded(
+      {super.key, required this.buttonText, required this.onpress});
 
   final String buttonText;
   final void Function() onpress;
@@ -12,13 +13,13 @@ class ButtonRounded extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onpress,
         style: ElevatedButton.styleFrom(
-          primary: Color.fromRGBO(173, 194, 169, 1),
+          backgroundColor: Color.fromRGBO(173, 194, 169, 1),
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(vertical: 20),
         ),
         child: Text(
           buttonText,
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         ),
       ),
     );

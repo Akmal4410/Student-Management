@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:main_project_hive/models/student_model.dart';
 import 'package:main_project_hive/screens/view_students.dart';
 import 'package:main_project_hive/widgets/button_rounded.dart';
+import 'package:main_project_hive/widgets/profile_picture.dart';
 import 'package:main_project_hive/widgets/text_input_field.dart';
 
 class AddStudent extends StatefulWidget {
@@ -113,8 +114,9 @@ class _AddStudentState extends State<AddStudent> {
                 controller: _nameController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "The Name field is emplty";
+                    return "The Name field is empty";
                   }
+                  return null;
                 },
               ),
               TextInputField(
@@ -123,8 +125,9 @@ class _AddStudentState extends State<AddStudent> {
                 controller: _ageController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "The Age field is emplty";
+                    return "The Age field is empty";
                   }
+                  return null;
                 },
               ),
               TextInputField(
@@ -133,8 +136,9 @@ class _AddStudentState extends State<AddStudent> {
                 controller: _emailController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "The Email field is emplty";
+                    return "The Email field is empty";
                   }
+                  return null;
                 },
               ),
               TextInputField(
@@ -143,8 +147,9 @@ class _AddStudentState extends State<AddStudent> {
                 controller: _phoneController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "The Phone field is emplty";
+                    return "The Phone field is empty";
                   }
+                  return null;
                 },
               ),
               ButtonRounded(
